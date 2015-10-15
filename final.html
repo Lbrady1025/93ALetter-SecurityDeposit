@@ -56,9 +56,9 @@
 		font-family: Verdana, Geneva, sans-serif;
 		font-size: 14px;
 		line-height: 20px;
-		color:#000000;
+		color:#ffffff;
 		min-width:30px;
-		background:#54ebaa;
+		background:#bb54eb;
 		border-radius: 15px;
 		padding:10px 15px 14px 15px;
 		margin-right:45px;
@@ -72,7 +72,7 @@
 		height: 0; 
 		border-left: 5px solid transparent; 
 		border-right: 10px solid transparent; 
-		border-top: 15px solid #54ebaa;
+		border-top: 15px solid #bb54eb;
 		margin:0 20px;
 	}
 	div.ans_text{
@@ -82,7 +82,7 @@
 		line-height: 20px;
 		color:#000000;
 		min-width:30px;
-		background:#cfc4ff;
+		background:#81f0e3;
 		border-radius: 15px;
 		padding:10px 15px 14px 15px;
 		margin-left:45px;
@@ -93,7 +93,7 @@
 		height: 0; 
 		border-left: 10px solid transparent; 
 		border-right: 5px solid transparent; 
-		border-top: 15px solid #cfc4ff;
+		border-top: 15px solid #81f0e3;
 		margin:0 20px;
 	}
 	div.choices{
@@ -218,13 +218,19 @@ A:Yes
 	A:Yes
 		Q(1.1.1):It sounds like you don't need to send a demand letter. If you have some other landlord-tenant issue, contact a lawyer and see how he or she can help.
 	A:No
-		DOC(1.1.2): Dear Sir or Madam:&lt;br&gt;&lt;br&gt; This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.&lt;br&gt;&lt;br&gt;
-		Q(1.1.2):Was the amount you paid more than the amount of one month's rent?
-		A:It was more.
-			DOC(1.1.2.1):The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).&lt;br&gt;&lt;br&gt;
-			Q(1.1.2.1):GOTO:2
-		A:It was less than or equal to one month's rent.
-			Q(1.1.2.2):GOTO:2
+		Q(1.1.2):What is your landlord's full name?
+		X:llname
+			Q(1.1.2.1):What is your landlord's address? (ex: 123 Fake Street)
+			X:lladdress
+				Q(1.1.2.1.1):What is your landlord's city, state, and zip code? (ex: Boston, MA 02108)
+				X:llcity
+					DOC(1.1.2.1.1.1): &lt;x&gt;llname&lt;/x&gt;&lt;br&gt;&lt;x&gt;lladdress&lt;/x&gt;&lt;br&gt;&lt;x&gt;llcity&lt;/x&gt;&lt;br&gt;&lt;br&gt;Dear Sir or Madam:&lt;br&gt;&lt;br&gt; This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.&lt;br&gt;&lt;br&gt;
+					Q(1.1.2.1.1.1):Was the amount you paid more than the amount of one month's rent?
+					A:It was more.
+						DOC(1.1.2.1.1.1.1):The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).&lt;br&gt;&lt;br&gt;
+						Q(1.1.2.1.1.1.1):GOTO:2
+					A:It was less than or equal to one month's rent.
+						Q(1.1.2.1.1.1.2):GOTO:2
 A:No
 	Q(1.2):You can't demand your security deposit back if you never paid one...
 Q(2):Do you and your landlord live in the same building?
@@ -242,7 +248,7 @@ A:Yes
 A:No
 	Q(3.2):Has it been more than 30 days since you moved out?
 	A:Yes
-		DOC:You failed to return the deposit within 30 days after the end of my tenancy, which is prohibited by M.G.L. ch. 186, s. 15B(3)(b).&lt;br&gt;&lt;br&gt;
+		DOC(3.2.1):You failed to return the deposit within 30 days after the end of my tenancy, which is prohibited by M.G.L. ch. 186, s. 15B(3)(b).&lt;br&gt;&lt;br&gt;
 		Q(3.2.1):GOTO:4
 	A:No
 		Q(3.2.2):You can't send a demand letter quite yet. If your landlord still hasn't returned your security deposit after 30 days have passed, come back and fill this out again!
@@ -252,15 +258,15 @@ A:Yes
 	A:Yes
 		Q(4.1.1):GOTO:4.1.2
 	A:No
-		DOC:On the notice of the bank account for my security deposit, you failed to include all the information required in M.G.L. ch. 186, s. 15B(3)(a).
+		DOC(4.1.2):On the notice of the bank account for my security deposit, you failed to include all the information required in M.G.L. ch. 186, s. 15B(3)(a).
 		Q(4.1.2):When did you receive it?
 		A:Within 30 days of paying the security deposit
 			Q(4.1.2.1):GOTO:5
 		A:Longer than 30 days after paying the security deposit
-			DOC:This notice was also not provided to me within 30 days of paying the security deposit as required by the same statute.&lt;br&gt;&lt;br&gt;
+			DOC(4.1.2.2):This notice was also not provided to me within 30 days of paying the security deposit as required by the same statute.&lt;br&gt;&lt;br&gt;
 			Q(4.1.2.2):GOTO:5
 A:No
-	DOC:Additionally, you failed to put my security deposit in a separate, interest-bearing account in a bank in Massachusetts and provide me notice, as is required under M.G.L. ch. 186, s. 15B(3).
+	DOC(4.2):Additionally, you failed to put my security deposit in a separate, interest-bearing account in a bank in Massachusetts and provide me notice, as is required under M.G.L. ch. 186, s. 15B(3).
 	Q(4.2):GOTO:5
 Q(5):Did your landlord provide you with a statement describing what condition your apartment was in when you moved in?
 A:Yes
@@ -273,7 +279,7 @@ A:Yes
 		I did not receive the statement of conditions within 10 days of the beginning of my tenancy, which is required by M.G.L. ch. 186, s. 15B(2)(a).
 		Q(5.1.3):GOTO:6
 A:No
-	DOC: I also did not receive a statement describing the conditions in my apartment when I moved in, which is required by M.G.L. ch. 186, s. 15B(2)(a).
+	DOC(5.2): I also did not receive a statement describing the conditions in my apartment when I moved in, which is required by M.G.L. ch. 186, s. 15B(2)(a).
 	Q(5.2):GOTO:6
 Q(6):Did you have the same landlord the whole time you lived at the apartment?
 A:Yes
@@ -288,23 +294,36 @@ A:Yes
 		A:Within 30 days after I moved out
 			Q(7.1.1.1):GOTO:8
 		A:Longer than 30 days after I moved out
-			DOC:You did not provide me timely notice of the deductions you made from my security deposit, which should have been sent to me within 30 days after I moved out.&lt;br&gt;&lt;br&gt;You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under the 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.&lt;br&gt;&lt;br&gt;All the best, 
+			DOC(7.1.1.2):You did not provide me timely notice of the deductions you made from my security deposit, which should have been sent to me within 30 days after I moved out.&lt;br&gt;&lt;br&gt;You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under the 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.&lt;br&gt;&lt;br&gt;All the best, 
 			Q(7.1.1.2):GOTO:8
 	A:No
-		DOC:When you deducted damages from my security deposit, you failed to provide a statement of the damages and the amount paid to fix them.
+		DOC(7.1.2):When you deducted damages from my security deposit, you failed to provide a statement of the damages and the amount paid to fix them.
 		Q(7.1.2):GOTO:8
 A:No
-	DOC:You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under the 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.&lt;br&gt;&lt;br&gt;All the best, 
+	DOC(7.2):You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under M.G.L. ch. 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.&lt;br&gt;&lt;br&gt;All the best,&lt;br&gt;&lt;br&gt; 
 	Q(7.2):GOTO:8
-Q(8):You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days.&lt;br&gt;&lt;br&gt;You will also need to fill in your name, address, and phone number on the letter so that your landlord can contact you. Sound good?
+Q(8):What is your full name?
+X:tname
+	Q(8.1):What is your current address? (ex: 123 Fake Street)
+	X:taddress
+		Q(8.1.1):What is your city, state, and zip code? (ex: Boston, MA 02108)
+		X:tcity
+			Q(8.1.1.1):What is your phone number?
+			X:tphone
+				DOC(8.1.1.1.1):&lt;x&gt;tname&lt;/x&gt;&lt;br&gt;&lt;x&gt;taddress&lt;/x&gt;&lt;br&gt;&lt;x&gt;tcity&lt;/x&gt;&lt;br&gt;&lt;x&gt;tphone&lt;/x&gt;
+				Q(8.1.1.1.1):GOTO:9
+Q(9):You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days. Sound good?
 A[javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'Proof read your letter. Print it out, and mail it to your landlord')]:Sounds good! Let's see this letter! </div><div id="ondeck" name="ondeck"><div id="doc" name="doc" style="display:none;"></div><div id='Q-1' name='Q-1' style='display:none;'>This short series of questions will let you know if you have the right to demand the return of your security deposit from your landlord using what is called a "93A Demand Letter." First thing's first: did you pay a security deposit when you moved in?
 </div><div id='Q-1.1' name='Q-1.1' style='display:none;'>Ok, great! Make sure you hold on to receipts, bank statements, or any other ways you can show how much you paid and when you paid it. Has your landlord returned your security deposit to you?
 </div><div id='Q-1.1.1' name='Q-1.1.1' style='display:none;'>It sounds like you don't need to send a demand letter. If you have some other landlord-tenant issue, contact a lawyer and see how he or she can help.
-</div><div id='D-1.1.2' name='D-1.1.2' style='display:none;'> Dear Sir or Madam:<br><br> This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.<br><br>
-</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'>Was the amount you paid more than the amount of one month's rent?
-</div><div id='D-1.1.2.1' name='D-1.1.2.1' style='display:none;'>The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).<br><br>
-</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>GOTO:2
-</div><div id='Q-1.1.2.2' name='Q-1.1.2.2' style='display:none;'>GOTO:2
+</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'>What is your landlord's full name?
+</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>What is your landlord's address? (ex: 123 Fake Street)
+</div><div id='Q-1.1.2.1.1' name='Q-1.1.2.1.1' style='display:none;'>What is your landlord's city, state, and zip code? (ex: Boston, MA 02108)
+</div><div id='D-1.1.2.1.1.1' name='D-1.1.2.1.1.1' style='display:none;'> <x>llname</x><br><x>lladdress</x><br><x>llcity</x><br><br>Dear Sir or Madam:<br><br> This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.<br><br>
+</div><div id='Q-1.1.2.1.1.1' name='Q-1.1.2.1.1.1' style='display:none;'>Was the amount you paid more than the amount of one month's rent?
+</div><div id='D-1.1.2.1.1.1.1' name='D-1.1.2.1.1.1.1' style='display:none;'>The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).<br><br>
+</div><div id='Q-1.1.2.1.1.1.1' name='Q-1.1.2.1.1.1.1' style='display:none;'>GOTO:2
+</div><div id='Q-1.1.2.1.1.1.2' name='Q-1.1.2.1.1.1.2' style='display:none;'>GOTO:2
 </div><div id='Q-1.2' name='Q-1.2' style='display:none;'>You can't demand your security deposit back if you never paid one...
 </div><div id='Q-2' name='Q-2' style='display:none;'>Do you and your landlord live in the same building?
 </div><div id='Q-2.1' name='Q-2.1' style='display:none;'>Does your landlord own any other rental properties?
@@ -345,15 +364,21 @@ A[javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'P
 </div><div id='Q-7.1.1.2' name='Q-7.1.1.2' style='display:none;'>GOTO:8
 </div><div id='D-7.1.2' name='D-7.1.2' style='display:none;'>When you deducted damages from my security deposit, you failed to provide a statement of the damages and the amount paid to fix them.
 </div><div id='Q-7.1.2' name='Q-7.1.2' style='display:none;'>GOTO:8
-</div><div id='D-7.2' name='D-7.2' style='display:none;'>You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under the 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.<br><br>All the best, 
+</div><div id='D-7.2' name='D-7.2' style='display:none;'>You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under M.G.L. ch. 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.<br><br>All the best,<br><br> 
 </div><div id='Q-7.2' name='Q-7.2' style='display:none;'>GOTO:8
-</div><div id='Q-8' name='Q-8' style='display:none;'>You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days.<br><br>You will also need to fill in your name, address, and phone number on the letter so that your landlord can contact you. Sound good?
+</div><div id='Q-8' name='Q-8' style='display:none;'>What is your full name?
+</div><div id='Q-8.1' name='Q-8.1' style='display:none;'>What is your current address? (ex: 123 Fake Street)
+</div><div id='Q-8.1.1' name='Q-8.1.1' style='display:none;'>What is your city, state, and zip code? (ex: Boston, MA 02108)
+</div><div id='Q-8.1.1.1' name='Q-8.1.1.1' style='display:none;'>What is your phone number?
+</div><div id='D-8.1.1.1.1' name='D-8.1.1.1.1' style='display:none;'><x>tname</x><br><x>taddress</x><br><x>tcity</x><br><x>tphone</x>
+</div><div id='Q-8.1.1.1.1' name='Q-8.1.1.1.1' style='display:none;'>GOTO:9
+</div><div id='Q-9' name='Q-9' style='display:none;'>You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days. Sound good?
 </div><div id='A-1.1' name='A-1.1' style='display:none;'>Yes
 </div><div id='A-href-1.1' name='A-href-1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1' name='A-target-1.1' style='display:none;'></div><div id='X-1.1' name='X-1.1' style='display:none;'></div><div id='A-1.1.1' name='A-1.1.1' style='display:none;'>Yes
 </div><div id='A-href-1.1.1' name='A-href-1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1' name='A-target-1.1.1' style='display:none;'></div><div id='X-1.1.1' name='X-1.1.1' style='display:none;'></div><div id='A-1.1.2' name='A-1.1.2' style='display:none;'>No
-</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'></div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'>It was more.
-</div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'></div><div id='A-1.1.2.2' name='A-1.1.2.2' style='display:none;'>It was less than or equal to one month's rent.
-</div><div id='A-href-1.1.2.2' name='A-href-1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.2' name='A-target-1.1.2.2' style='display:none;'></div><div id='X-1.1.2.2' name='X-1.1.2.2' style='display:none;'></div><div id='A-1.2' name='A-1.2' style='display:none;'>No
+</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'></div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'>llname</div><div id='A-1.1.2.1.1' name='A-1.1.2.1.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1.1' name='A-href-1.1.2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1' name='A-target-1.1.2.1.1' style='display:none;'></div><div id='X-1.1.2.1.1' name='X-1.1.2.1.1' style='display:none;'>lladdress</div><div id='A-1.1.2.1.1.1' name='A-1.1.2.1.1.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1.1.1' name='A-href-1.1.2.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1' name='A-target-1.1.2.1.1.1' style='display:none;'></div><div id='X-1.1.2.1.1.1' name='X-1.1.2.1.1.1' style='display:none;'>llcity</div><div id='A-1.1.2.1.1.1.1' name='A-1.1.2.1.1.1.1' style='display:none;'>It was more.
+</div><div id='A-href-1.1.2.1.1.1.1' name='A-href-1.1.2.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1.1' name='A-target-1.1.2.1.1.1.1' style='display:none;'></div><div id='X-1.1.2.1.1.1.1' name='X-1.1.2.1.1.1.1' style='display:none;'></div><div id='A-1.1.2.1.1.1.2' name='A-1.1.2.1.1.1.2' style='display:none;'>It was less than or equal to one month's rent.
+</div><div id='A-href-1.1.2.1.1.1.2' name='A-href-1.1.2.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1.2' name='A-target-1.1.2.1.1.1.2' style='display:none;'></div><div id='X-1.1.2.1.1.1.2' name='X-1.1.2.1.1.1.2' style='display:none;'></div><div id='A-1.2' name='A-1.2' style='display:none;'>No
 </div><div id='A-href-1.2' name='A-href-1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2' name='A-target-1.2' style='display:none;'></div><div id='X-1.2' name='X-1.2' style='display:none;'></div><div id='A-2.1' name='A-2.1' style='display:none;'>Yes
 </div><div id='A-href-2.1' name='A-href-2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1' name='A-target-2.1' style='display:none;'></div><div id='X-2.1' name='X-2.1' style='display:none;'></div><div id='A-2.1.1' name='A-2.1.1' style='display:none;'>Yes
 </div><div id='A-href-2.1.1' name='A-href-2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1' name='A-target-2.1.1' style='display:none;'></div><div id='X-2.1.1' name='X-2.1.1' style='display:none;'></div><div id='A-2.1.2' name='A-2.1.2' style='display:none;'>No
@@ -382,14 +407,17 @@ A[javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'P
 </div><div id='A-href-7.1.1.1' name='A-href-7.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.1.1' name='A-target-7.1.1.1' style='display:none;'></div><div id='X-7.1.1.1' name='X-7.1.1.1' style='display:none;'></div><div id='A-7.1.1.2' name='A-7.1.1.2' style='display:none;'>Longer than 30 days after I moved out
 </div><div id='A-href-7.1.1.2' name='A-href-7.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.1.2' name='A-target-7.1.1.2' style='display:none;'></div><div id='X-7.1.1.2' name='X-7.1.1.2' style='display:none;'></div><div id='A-7.1.2' name='A-7.1.2' style='display:none;'>No
 </div><div id='A-href-7.1.2' name='A-href-7.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.2' name='A-target-7.1.2' style='display:none;'></div><div id='X-7.1.2' name='X-7.1.2' style='display:none;'></div><div id='A-7.2' name='A-7.2' style='display:none;'>No
-</div><div id='A-href-7.2' name='A-href-7.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.2' name='A-target-7.2' style='display:none;'></div><div id='X-7.2' name='X-7.2' style='display:none;'></div><div id='A-8.1' name='A-8.1' style='display:none;'>Sounds good! Let's see this letter! </div><div id='A-href-8.1' name='A-href-8.1' style='display:none;'>javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'Proof read your letter. Print it out, and mail it to your landlord')</div><div id='A-target-8.1' name='A-target-8.1' style='display:none;'></div><div id='X-8.1' name='X-8.1' style='display:none;'></div></div><textarea id="original" name="original" style="display:none;" disabled="disabled"><div id="doc" name="doc" style="display:none;"></div><div id='Q-1' name='Q-1' style='display:none;'>This short series of questions will let you know if you have the right to demand the return of your security deposit from your landlord using what is called a "93A Demand Letter." First thing's first: did you pay a security deposit when you moved in?
+</div><div id='A-href-7.2' name='A-href-7.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.2' name='A-target-7.2' style='display:none;'></div><div id='X-7.2' name='X-7.2' style='display:none;'></div><div id='A-8.1' name='A-8.1' style='display:none;'><variable></div><div id='A-href-8.1' name='A-href-8.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1' name='A-target-8.1' style='display:none;'></div><div id='X-8.1' name='X-8.1' style='display:none;'>tname</div><div id='A-8.1.1' name='A-8.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1' name='A-href-8.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1' name='A-target-8.1.1' style='display:none;'></div><div id='X-8.1.1' name='X-8.1.1' style='display:none;'>taddress</div><div id='A-8.1.1.1' name='A-8.1.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1.1' name='A-href-8.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1.1' name='A-target-8.1.1.1' style='display:none;'></div><div id='X-8.1.1.1' name='X-8.1.1.1' style='display:none;'>tcity</div><div id='A-8.1.1.1.1' name='A-8.1.1.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1.1.1' name='A-href-8.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1.1.1' name='A-target-8.1.1.1.1' style='display:none;'></div><div id='X-8.1.1.1.1' name='X-8.1.1.1.1' style='display:none;'>tphone</div><div id='A-9.1' name='A-9.1' style='display:none;'>Sounds good! Let's see this letter! </div><div id='A-href-9.1' name='A-href-9.1' style='display:none;'>javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'Proof read your letter. Print it out, and mail it to your landlord')</div><div id='A-target-9.1' name='A-target-9.1' style='display:none;'></div><div id='X-9.1' name='X-9.1' style='display:none;'></div></div><textarea id="original" name="original" style="display:none;" disabled="disabled"><div id="doc" name="doc" style="display:none;"></div><div id='Q-1' name='Q-1' style='display:none;'>This short series of questions will let you know if you have the right to demand the return of your security deposit from your landlord using what is called a "93A Demand Letter." First thing's first: did you pay a security deposit when you moved in?
 </div><div id='Q-1.1' name='Q-1.1' style='display:none;'>Ok, great! Make sure you hold on to receipts, bank statements, or any other ways you can show how much you paid and when you paid it. Has your landlord returned your security deposit to you?
 </div><div id='Q-1.1.1' name='Q-1.1.1' style='display:none;'>It sounds like you don't need to send a demand letter. If you have some other landlord-tenant issue, contact a lawyer and see how he or she can help.
-</div><div id='D-1.1.2' name='D-1.1.2' style='display:none;'> Dear Sir or Madam:<br><br> This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.<br><br>
-</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'>Was the amount you paid more than the amount of one month's rent?
-</div><div id='D-1.1.2.1' name='D-1.1.2.1' style='display:none;'>The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).<br><br>
-</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>GOTO:2
-</div><div id='Q-1.1.2.2' name='Q-1.1.2.2' style='display:none;'>GOTO:2
+</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'>What is your landlord's full name?
+</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>What is your landlord's address? (ex: 123 Fake Street)
+</div><div id='Q-1.1.2.1.1' name='Q-1.1.2.1.1' style='display:none;'>What is your landlord's city, state, and zip code? (ex: Boston, MA 02108)
+</div><div id='D-1.1.2.1.1.1' name='D-1.1.2.1.1.1' style='display:none;'> <x>llname</x><br><x>lladdress</x><br><x>llcity</x><br><br>Dear Sir or Madam:<br><br> This is a demand letter for the return of my security deposit pursuant to M.G.L. ch. 93A. You, as my landlord, engaged in the following unfair or deceptive business practices prohibited by Massachusetts law.<br><br>
+</div><div id='Q-1.1.2.1.1.1' name='Q-1.1.2.1.1.1' style='display:none;'>Was the amount you paid more than the amount of one month's rent?
+</div><div id='D-1.1.2.1.1.1.1' name='D-1.1.2.1.1.1.1' style='display:none;'>The amount you required for my security deposit was more than the amount of one month's rent. This is prohibited under M.G.L. ch. 186, s. 15B(1)(b)(iii).<br><br>
+</div><div id='Q-1.1.2.1.1.1.1' name='Q-1.1.2.1.1.1.1' style='display:none;'>GOTO:2
+</div><div id='Q-1.1.2.1.1.1.2' name='Q-1.1.2.1.1.1.2' style='display:none;'>GOTO:2
 </div><div id='Q-1.2' name='Q-1.2' style='display:none;'>You can't demand your security deposit back if you never paid one...
 </div><div id='Q-2' name='Q-2' style='display:none;'>Do you and your landlord live in the same building?
 </div><div id='Q-2.1' name='Q-2.1' style='display:none;'>Does your landlord own any other rental properties?
@@ -430,15 +458,21 @@ A[javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'P
 </div><div id='Q-7.1.1.2' name='Q-7.1.1.2' style='display:none;'>GOTO:8
 </div><div id='D-7.1.2' name='D-7.1.2' style='display:none;'>When you deducted damages from my security deposit, you failed to provide a statement of the damages and the amount paid to fix them.
 </div><div id='Q-7.1.2' name='Q-7.1.2' style='display:none;'>GOTO:8
-</div><div id='D-7.2' name='D-7.2' style='display:none;'>You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under the 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.<br><br>All the best, 
+</div><div id='D-7.2' name='D-7.2' style='display:none;'>You have 30 days to respond to this letter. If I do not hear from you or you refuse to return my security deposit, I will be moving forward in court. Under M.G.L. ch. 93A, there are mandatory damages in the amount of three times the amount of the security deposit, plus interest. I look forward to hearing from you.<br><br>All the best,<br><br> 
 </div><div id='Q-7.2' name='Q-7.2' style='display:none;'>GOTO:8
-</div><div id='Q-8' name='Q-8' style='display:none;'>You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days.<br><br>You will also need to fill in your name, address, and phone number on the letter so that your landlord can contact you. Sound good?
+</div><div id='Q-8' name='Q-8' style='display:none;'>What is your full name?
+</div><div id='Q-8.1' name='Q-8.1' style='display:none;'>What is your current address? (ex: 123 Fake Street)
+</div><div id='Q-8.1.1' name='Q-8.1.1' style='display:none;'>What is your city, state, and zip code? (ex: Boston, MA 02108)
+</div><div id='Q-8.1.1.1' name='Q-8.1.1.1' style='display:none;'>What is your phone number?
+</div><div id='D-8.1.1.1.1' name='D-8.1.1.1.1' style='display:none;'><x>tname</x><br><x>taddress</x><br><x>tcity</x><br><x>tphone</x>
+</div><div id='Q-8.1.1.1.1' name='Q-8.1.1.1.1' style='display:none;'>GOTO:9
+</div><div id='Q-9' name='Q-9' style='display:none;'>You're all finished! The next step is to generate your letter. There are just a few things you need to know first. Print out two copies. Send one by certified mail to your landlord and keep one for your records. Your landlord has 30 days to respond to the letter. If you don't hear anything or your landlord refuses to return the deposit, then you should contact a lawyer about bringing a lawsuit against your landlord or contact the court for help bringing this case on your own. Make sure to bring your copy of this letter with you, as well as the proof you paid your deposit. The law that you're using right now requires the landlord pay you three times the amount of your deposit plus interest if they fail to respond within the 30 days. Sound good?
 </div><div id='A-1.1' name='A-1.1' style='display:none;'>Yes
 </div><div id='A-href-1.1' name='A-href-1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1' name='A-target-1.1' style='display:none;'></div><div id='X-1.1' name='X-1.1' style='display:none;'></div><div id='A-1.1.1' name='A-1.1.1' style='display:none;'>Yes
 </div><div id='A-href-1.1.1' name='A-href-1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1' name='A-target-1.1.1' style='display:none;'></div><div id='X-1.1.1' name='X-1.1.1' style='display:none;'></div><div id='A-1.1.2' name='A-1.1.2' style='display:none;'>No
-</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'></div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'>It was more.
-</div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'></div><div id='A-1.1.2.2' name='A-1.1.2.2' style='display:none;'>It was less than or equal to one month's rent.
-</div><div id='A-href-1.1.2.2' name='A-href-1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.2' name='A-target-1.1.2.2' style='display:none;'></div><div id='X-1.1.2.2' name='X-1.1.2.2' style='display:none;'></div><div id='A-1.2' name='A-1.2' style='display:none;'>No
+</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'></div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'>llname</div><div id='A-1.1.2.1.1' name='A-1.1.2.1.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1.1' name='A-href-1.1.2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1' name='A-target-1.1.2.1.1' style='display:none;'></div><div id='X-1.1.2.1.1' name='X-1.1.2.1.1' style='display:none;'>lladdress</div><div id='A-1.1.2.1.1.1' name='A-1.1.2.1.1.1' style='display:none;'><variable></div><div id='A-href-1.1.2.1.1.1' name='A-href-1.1.2.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1' name='A-target-1.1.2.1.1.1' style='display:none;'></div><div id='X-1.1.2.1.1.1' name='X-1.1.2.1.1.1' style='display:none;'>llcity</div><div id='A-1.1.2.1.1.1.1' name='A-1.1.2.1.1.1.1' style='display:none;'>It was more.
+</div><div id='A-href-1.1.2.1.1.1.1' name='A-href-1.1.2.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1.1' name='A-target-1.1.2.1.1.1.1' style='display:none;'></div><div id='X-1.1.2.1.1.1.1' name='X-1.1.2.1.1.1.1' style='display:none;'></div><div id='A-1.1.2.1.1.1.2' name='A-1.1.2.1.1.1.2' style='display:none;'>It was less than or equal to one month's rent.
+</div><div id='A-href-1.1.2.1.1.1.2' name='A-href-1.1.2.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1.1.1.2' name='A-target-1.1.2.1.1.1.2' style='display:none;'></div><div id='X-1.1.2.1.1.1.2' name='X-1.1.2.1.1.1.2' style='display:none;'></div><div id='A-1.2' name='A-1.2' style='display:none;'>No
 </div><div id='A-href-1.2' name='A-href-1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2' name='A-target-1.2' style='display:none;'></div><div id='X-1.2' name='X-1.2' style='display:none;'></div><div id='A-2.1' name='A-2.1' style='display:none;'>Yes
 </div><div id='A-href-2.1' name='A-href-2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1' name='A-target-2.1' style='display:none;'></div><div id='X-2.1' name='X-2.1' style='display:none;'></div><div id='A-2.1.1' name='A-2.1.1' style='display:none;'>Yes
 </div><div id='A-href-2.1.1' name='A-href-2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1' name='A-target-2.1.1' style='display:none;'></div><div id='X-2.1.1' name='X-2.1.1' style='display:none;'></div><div id='A-2.1.2' name='A-2.1.2' style='display:none;'>No
@@ -467,7 +501,7 @@ A[javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'P
 </div><div id='A-href-7.1.1.1' name='A-href-7.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.1.1' name='A-target-7.1.1.1' style='display:none;'></div><div id='X-7.1.1.1' name='X-7.1.1.1' style='display:none;'></div><div id='A-7.1.1.2' name='A-7.1.1.2' style='display:none;'>Longer than 30 days after I moved out
 </div><div id='A-href-7.1.1.2' name='A-href-7.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.1.2' name='A-target-7.1.1.2' style='display:none;'></div><div id='X-7.1.1.2' name='X-7.1.1.2' style='display:none;'></div><div id='A-7.1.2' name='A-7.1.2' style='display:none;'>No
 </div><div id='A-href-7.1.2' name='A-href-7.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.1.2' name='A-target-7.1.2' style='display:none;'></div><div id='X-7.1.2' name='X-7.1.2' style='display:none;'></div><div id='A-7.2' name='A-7.2' style='display:none;'>No
-</div><div id='A-href-7.2' name='A-href-7.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.2' name='A-target-7.2' style='display:none;'></div><div id='X-7.2' name='X-7.2' style='display:none;'></div><div id='A-8.1' name='A-8.1' style='display:none;'>Sounds good! Let's see this letter! </div><div id='A-href-8.1' name='A-href-8.1' style='display:none;'>javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'Proof read your letter. Print it out, and mail it to your landlord')</div><div id='A-target-8.1' name='A-target-8.1' style='display:none;'></div><div id='X-8.1' name='X-8.1' style='display:none;'></div></textarea><textarea id="transcript" name="transcript" style="display:none;" disabled="disabled"></textarea><div style="float:left;width:100%;margin:15px 0 0px 0;border-top: solid 1px #ddd;"><div id=credits class=credits style="display:none;"><div class=credit_text><p><b> 93A Demand Letter for Security Deposit Return</b></p><p>By  Leah Brady</p><p> Series of questions that allows a tenant to see if they can demand the return of their security deposit using a 93A demand letter.</p></div></div><p align=center><a href="javascript:void('');" onClick="shoh('credits');">credits</a> | <a href="http://www.qnamarkup.org/" target=_top>code your own</a></p></div></FORM></div></div>
+</div><div id='A-href-7.2' name='A-href-7.2' style='display:none;'>javascript:void('');</div><div id='A-target-7.2' name='A-target-7.2' style='display:none;'></div><div id='X-7.2' name='X-7.2' style='display:none;'></div><div id='A-8.1' name='A-8.1' style='display:none;'><variable></div><div id='A-href-8.1' name='A-href-8.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1' name='A-target-8.1' style='display:none;'></div><div id='X-8.1' name='X-8.1' style='display:none;'>tname</div><div id='A-8.1.1' name='A-8.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1' name='A-href-8.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1' name='A-target-8.1.1' style='display:none;'></div><div id='X-8.1.1' name='X-8.1.1' style='display:none;'>taddress</div><div id='A-8.1.1.1' name='A-8.1.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1.1' name='A-href-8.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1.1' name='A-target-8.1.1.1' style='display:none;'></div><div id='X-8.1.1.1' name='X-8.1.1.1' style='display:none;'>tcity</div><div id='A-8.1.1.1.1' name='A-8.1.1.1.1' style='display:none;'><variable></div><div id='A-href-8.1.1.1.1' name='A-href-8.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-8.1.1.1.1' name='A-target-8.1.1.1.1' style='display:none;'></div><div id='X-8.1.1.1.1' name='X-8.1.1.1.1' style='display:none;'>tphone</div><div id='A-9.1' name='A-9.1' style='display:none;'>Sounds good! Let's see this letter! </div><div id='A-href-9.1' name='A-href-9.1' style='display:none;'>javascript:submit2('http://www.qnamarkup.org/doc/parse/html/', 'POST', 't', 'Proof read your letter. Print it out, and mail it to your landlord')</div><div id='A-target-9.1' name='A-target-9.1' style='display:none;'></div><div id='X-9.1' name='X-9.1' style='display:none;'></div></textarea><textarea id="transcript" name="transcript" style="display:none;" disabled="disabled"></textarea><div style="float:left;width:100%;margin:15px 0 0px 0;border-top: solid 1px #ddd;"><div id=credits class=credits style="display:none;"><div class=credit_text><p><b> 93A Demand Letter for Security Deposit Return</b></p><p>By  Leah Brady</p><p> Series of questions that allows a tenant to see if they can demand the return of their security deposit using a 93A demand letter.</p></div></div><p align=center><a href="javascript:void('');" onClick="shoh('credits');">credits</a> | <a href="http://www.qnamarkup.org/" target=_top>code your own</a></p></div></FORM></div></div>
 <script type="text/javascript">
 	var QNum = 0;
 	var Qhtml = "";
